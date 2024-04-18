@@ -269,18 +269,9 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 uint8_t DMAsendflag;
 void DMA1_Stream4_IRQHandler(void)
 {	
-	if(HAL_DMA_GetState(&hdma_uart4_tx))
-	{
-		__HAL_DMA_CLEAR_FLAG(&hdma_uart4_tx,((uint32_t)0x20008020));
-		__HAL_DMA_DISABLE_IT(&hdma_uart4_tx,((uint32_t)0x20008020));
-		__HAL_DMA_DISABLE(&hdma_uart4_tx);
-		 DMAsendflag = 0;
-//		DMA_ClearFlag(DMA1_Stream4, DMA_FLAG_TCIF4);
-//		DMA_ClearITPendingBit(DMA1_Stream4, DMA_IT_TCIF4);
-//		DMA_Cmd(DMA1_Stream4, DISABLE);			
-//        DMAsendflag = 0;
-	}
+    HAL_DMA_IRQHandler(&hdma_uart4_tx);
 }
+
 /**********************************************************************************************************
 *函 数 名: UART4_IRQHandler
 *功能说明: usart4中断
@@ -292,37 +283,33 @@ uint8_t JudgeReveice_DMA_DIR_Flag  = 0;
 void UART4_IRQHandler(void)
 {
 	HAL_UART_IRQHandler(&huart4);
-	HAL_UART_IDLECallback(&huart4);//这个函数我不知道为什么找不到
-	uint16_t Receive_Len = 0;
-	if(HAL_OK==HAL_UART_GetState(&huart4))
-	{
-		HAL_DMA_Abort(&hdma_uart4_rx);
-        Receive_Len = JudgeBufBiggestSize - __HAL_DMA_GET_COUNTER(&hdma_uart4_rx);
-        Receive_Judge_Date_Len = Receive_Len;
-        JudgeReveice_Flag = 1;
-        memcpy(JudgeReceiveBuffer_1, JudgeReceiveBuffer, Receive_Len);
-        HAL_DMA_Start(&hdma_uart4_rx, (uint32_t)&UART4->DR, (uint32_t)JudgeReceiveBuffer, JudgeBufBiggestSize);
-	}
-		
+	HAL_UART_IDLECallback(&huart4);
 	
 	
-	
-	
-	
-//	if(SET==USART_GetITStatus(UART4,USART_IT_IDLE))
-//	{
-//		uint8_t rc_tmp=UART4->SR;
-//		rc_tmp=UART4->DR;//软件序列清除IDLE标志位
-//		DMA_Cmd(DMA1_Stream2, DISABLE);
-//		Receive_Len = JudgeBufBiggestSize - DMA_GetCurrDataCounter(DMA1_Stream2);
-//		Receive_Judge_Date_Len = Receive_Len;
-//		JudgeReveice_Flag = 1;
-//		memcpy(JudgeReceiveBuffer_1,JudgeReceiveBuffer,Receive_Len);
-//		DMA_SetCurrDataCounter(DMA1_Stream2,JudgeBufBiggestSize);
-//		DMA_Cmd(DMA1_Stream2, ENABLE);
-	}
+}
 
-/* UART4 空闲中断回调函数 */
+/**********************************************************************************************************
+*函 数 名: HAL_UART_TxCpltCallback
+*功能说明: tx发送完成中断
+*形    参: &huart4
+*返 回 值: 无
+**********************************************************************************************************/
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == UART4)
+    {
+        DMAsendflag = 0;
+    }
+}
+
+/**********************************************************************************************************
+*函 数 名: HAL_UART_IDLECallback
+*功能说明: 空闲中断回调
+*形    参: &huart4
+*返 回 值: 无
+**********************************************************************************************************/
+
 void HAL_UART_IDLECallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == UART4)
