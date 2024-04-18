@@ -9,3 +9,5 @@
 出现大量报错：..\MyTask\JudgeReceive_Task.c(161): error:  #167: argument of type "uint16_t *" is incompatible with parameter of type "uint32_t *"
 ..\MyTask\JudgeReceive_Task.c(161): error:  #167: argument of type "uint16_t *" is incompatible with parameter of type "uint32_t *"
 以上两个报错可以通过强制类型转换解决
+
+4/18 合并了裁判系统和原来的老uart文件，现在主要处理JudgeReceive.c
