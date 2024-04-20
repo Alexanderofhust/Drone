@@ -1,11 +1,7 @@
 /* include */
 
 #include "main.h"
-
-
-#include "math_cal.h"
-
-#include "usbd_def.h"
+#include "gimbal_task.h"
 
 /* declare */
 /*----------------------------------外部变量---------------------------*/
@@ -50,16 +46,17 @@ static void Plane_ID_Init(void);
 
 static void Pitch_Motor_Test_G(float d_Pitch,uint16_t delay_time);
 
+SawToothWave wave;
 vector pitchfilter;
 vector yawfilter;
 
 #define GIMBALTEST   0			//测试补偿电流
-
+#define FREQTEST 0
 
 #define YAW_IMULIMIT_LEFT  -135
 #define YAW_IMULIMIT_RIGHT  135//6700
 
-#define PITCH_IMULIMIT_HIGH  1
+#define PITCH_IMULIMIT_HIGH  2
 #define PITCH_IMULIMIT_LOW -40//-40
 
 #define PITCH_MOTORLIMIT_HIGH	3	
@@ -79,9 +76,21 @@ void SecondOrderFilter(vector *v)
 	v->y2 = v->y1;    
 	v->y1 = v->yout; 
 }
-
-
-
+#if FREQTEST
+extern float num;//计数器
+extern float ARR;//初始频率为1hz
+extern float freq;//频率
+extern float circle;//特定频率下循环次数设定
+extern TIM_HandleTypeDef htim3;
+void stop_TIM3(void)
+{
+	HAL_TIM_Base_Stop_IT(&htim3);
+	num = 0;//计数器
+	ARR = 1000;//初始频率为1hz
+	freq = 1;//频率
+	circle = 0;//特定频率下循环次数设定
+}
+#endif
 
 
 /**********************************************************************************************************
@@ -204,6 +213,7 @@ void Data_choose(void)
 
 void AutoGimbal(void)
 {
+	#if FREQTEST!=1
 	if(Gimbal_Init)
 	{
 		GimbalYawPos = yaw.Angle;			
@@ -211,9 +221,9 @@ void AutoGimbal(void)
 		Gimbal_Init = 0;
 		pid_reset(&pitch.PositionPID[droneState.MotorMode]);
 		pid_reset(&yaw.PositionPID[droneState.MotorMode]);
-		
+
 	}
-	
+		
 	/**************不开辅瞄接收值为0,将setpoint设为imu当前值   */
 	if(PC_Recv.yaw!=0)
 		GimbalYawPos = PC_Recv.yaw;			
@@ -230,6 +240,20 @@ void AutoGimbal(void)
 	
 	yaw.PositionPID[droneState.MotorMode].SetPoint = GimbalYawPos;
 	pitch.PositionPID[droneState.MotorMode].SetPoint = GimbalPitchPos;
+	#else
+	if(Gimbal_Init)
+	{
+		GimbalYawPos = 0;			
+		GimbalPitchPos = pitch.Angle;
+		Gimbal_Init = 0;
+		pid_reset(&pitch.PositionPID[droneState.MotorMode]);
+		pid_reset(&yaw.PositionPID[droneState.MotorMode]);
+		SawWaveRun();
+	}
+	
+	
+	yaw.PositionPID[droneState.MotorMode].SetPoint = wave.out;
+	#endif
 
 }
 
@@ -314,9 +338,15 @@ void RcGimbal(void)
 		Gimbal_Init = 0;
 		pid_reset(&pitch.PositionPID[droneState.MotorMode]);
 		pid_reset(&yaw.PositionPID[droneState.MotorMode]);
+#if FREQTEST
+//		stop_TIM3();
+		GimbalYawPos = 0;
+		SawWaveStop(&wave,1);
+		
+#endif
 		
 	}
-	
+
 	
 #if GIMBALTEST
 	Pitch_Motor_Test_G(0.5,50);
@@ -356,7 +386,11 @@ void RcGimbal(void)
 
 void LostGimbal(void)//掉电模式
 {
-
+	
+	#if FREQTEST
+		//stop_TIM3();
+	SawWaveStop(&wave,1);
+	#endif
 	RC_Ctl.rc.ch0=1024;
 	RC_Ctl.rc.ch1=1024;
 	RC_Ctl.rc.ch2=1024;
@@ -427,6 +461,8 @@ void GimbalTask(void const *pvParameters)
 	yaw.zero.Circle=0;
 	pitch.zero.Circle=0;
 
+	SawToothInit(&wave,1,30);
+	
 	for(;;)
 	{		
 		Data_choose();
@@ -484,15 +520,15 @@ void imugimbal_config(void)			//imu云台初始化函数
 	yawfilter.k4 = 0.2;
 	yawfilter.k5 = 0.05;
 	//陀螺仪PID
-	yaw.PositionPID[0].P = 25.0f;
-	yaw.PositionPID[0].I = 0.020f;	
+	yaw.PositionPID[0].P = 19.5f;
+	yaw.PositionPID[0].I = 0.005f;	
 	yaw.PositionPID[0].D = 0.0f;
 	yaw.PositionPID[0].IMax = 100.0f;
 	yaw.PositionPID[0].OutMax = 30000.0f;
 
 
-	yaw.SpeedPID[0].P = 200.0f;
-	yaw.SpeedPID[0].I = 0.0f;	
+	yaw.SpeedPID[0].P = 190.0f;
+	yaw.SpeedPID[0].I = 5.0f;	
 	yaw.SpeedPID[0].D = 0.0f;
 	yaw.SpeedPID[0].IMax = 400;
 	yaw.SpeedPID[0].OutMax = 30000;
@@ -527,16 +563,16 @@ void imugimbal_config(void)			//imu云台初始化函数
 	pitchfilter.k5 = 0.05;
 	
 	//陀螺仪PID
-	pitch.PositionPID[0].P = 30.0f;
-	pitch.PositionPID[0].I = 0.103f;	
+	pitch.PositionPID[0].P = 32.00f;//20
+	pitch.PositionPID[0].I = 0.2f;	
 	pitch.PositionPID[0].D = 0.0f;
-	pitch.PositionPID[0].IMax = 330;
+	pitch.PositionPID[0].IMax = 1000;
 	pitch.PositionPID[0].OutMax = 16000;
 	
-	pitch.SpeedPID[0].P = 150.0f;
-	pitch.SpeedPID[0].I = 10.0f;	
+	pitch.SpeedPID[0].P = 110.0f;
+	pitch.SpeedPID[0].I = 0.5f;	
 	pitch.SpeedPID[0].D = 0;
-	pitch.SpeedPID[0].IMax = 300;
+	pitch.SpeedPID[0].IMax = 1000;
 	pitch.SpeedPID[0].OutMax = 16000;
 	
 	pitch.AngleFF.param[0] = 0;

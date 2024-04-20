@@ -868,12 +868,12 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=ins_task\startup_stm32f407xx.d -oins_task\startup_stm32f407xx.o
- -I..\\Inc -I../Inc -IC:\Users\86135\OneDrive\桌面\无人机\drone_c\drone_c\MDK-A
-RM\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include -IC:\Keil_v5\AR
-M\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --pr
-edefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_
-VERSION SETA 515" --predefine="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" -
--list=startup_stm32f407xx.lst startup_stm32f407xx.s
+ -I..\\Inc -I../Inc -IC:\Users\86135\OneDrive\桌面\无人机\RM\2024_Embedded\dron
+e_c\MDK-ARM\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include -IC:\K
+eil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Inc
+lude --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 515" -
+-predefine="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=startup_stm32
+f407xx.lst startup_stm32f407xx.s
 
 
 
@@ -1958,4 +1958,4 @@ Symbol: __main
       At line 190 in file startup_stm32f407xx.s
 Comment: __main used once
 2 symbols
-446 symbols in table
+445 symbols in table

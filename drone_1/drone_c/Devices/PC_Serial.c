@@ -13,20 +13,22 @@ short last_shoot_flag = 0;
 
 void PCReceive(unsigned char *PCbuffer)//辅瞄接收函数
 {
-	i++;
-//	if(PCbuffer[0] == '!' && Verify_CRC16_Check_Sum(PCbuffer, PC_RECVBUF_SIZE))
-	if(PCbuffer[0] == '!' )
-	{
-		//数据解码
-		memcpy(&PC_Recv, PCbuffer, PC_RECVBUF_SIZE);
+		i++;
+		if(PCbuffer[0] == '!' && Verify_CRC16_Check_Sum(PCbuffer, PC_RECVBUF_SIZE))
+		{
+				if(PCbuffer[0] == '!' )
+				{
+					//数据解码
+					memcpy(&PC_Recv, PCbuffer, PC_RECVBUF_SIZE);
 
-		PC_Recv.pitch = PC_Recv.pitch/100.0f;
-		pc_yaw = PC_Recv.yaw;		//PCyaw,pitch
+					PC_Recv.pitch = PC_Recv.pitch/100.0f;
+					pc_yaw = PC_Recv.yaw;		//PCyaw,pitch
 
-		PC_Recv.shoot_flag = PC_Recv.shoot_flag - last_shoot_flag;
-		last_shoot_flag = PC_Recv.shoot_flag;
-		i1++;
-	}
+					PC_Recv.shoot_flag = PC_Recv.shoot_flag - last_shoot_flag;
+					last_shoot_flag = PC_Recv.shoot_flag;
+					i1++;
+				}
+		}
 }
 
 	PCSendData PC_send_data;
@@ -38,7 +40,19 @@ void SendtoPCPack(unsigned char *buff)
 	//1字节0
 	PC_send_data.start_flag = '!';
 	//1字节1
-	PC_send_data.balance_code = 1;
+	PC_send_data.robot_color = 0;
+	//1字节2
+	PC_send_data.shoot_level = 3;
+	//1字节2
+	PC_send_data.mode = 1;
+	//1字节2
+	PC_send_data.which_balance = 2;
+	//1字节1
+	PC_send_data.change_priority_flag = 1;
+	
+	//1字节
+	PC_send_data.frame_id = 0;
+	//
 	//2字节 
 	PC_send_data.pitch = (short)(pitch.imuAngle * 100.0f);
 	//PC_send_data.pitch = pitch.Angle*100;

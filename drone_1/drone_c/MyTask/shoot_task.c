@@ -10,7 +10,7 @@
 #define K1  0.9995 // 低通滤波参数
 #define A  0.5	  // 限幅参数
 
-uint32_t interval_time = 0;
+
 
 
 int8_t shoot_flag = 0;
@@ -33,42 +33,45 @@ static void StopShoot(void);
 static void shoot_config(void);
 static void Plane_ID_Shoot_Config(void);
 
-float m=4;
-float lastPos,deltaPos,pos;
-int flag = 0;
-int teset1 = 50;
+
 int isPluckStuck(void)
 {
+	static uint8_t skip_round = 4;//跳过的控制循环
+	static uint8_t stuckflag = 0;//卡单标志
+	static float lastPos,deltaPos,pos;//上次角度，变化角度，反拨角度
 	
-	static int skip = 20;
-	static float pos = 0;
 	deltaPos = pluck.Angle_zeroCheck - lastPos;
-	//判断卡蛋
-	if(deltaPos < teset1 && droneState.ShootMode == cont_shoot && flag != 1)
+	
+	if(droneState.ShootMode == single_shoot)
+		return 0;
+	
+	//判断卡蛋,50
+	if(deltaPos < 1 && droneState.ShootMode == cont_shoot && stuckflag != 1)
 	{
-		flag = 1;
+		stuckflag = 1;
 		pos = pluck.Angle_zeroCheck-Onegrid;
 	}
 	else 
 	{	
-		flag = 0;
+		stuckflag = 0;
 	}
 	
 	lastPos = pluck.Angle_zeroCheck;
-	if(flag)
+	if(stuckflag)
 	{
-		if(m!=0)
+		if(skip_round!=0)
 		{
 			pluck.PositionPID.SetPoint = pos;
+			skip_round--;
 			return 1;
-			m--;
+			
 		
 		}
 	}
 	else
 	{
-		m = 4;
-		flag = 0;
+		skip_round = 4;
+		stuckflag = 0;
 		return 0;
 		
 	}
@@ -77,8 +80,11 @@ int isPluckStuck(void)
 
 void RcShoot(void)
 {
-	static int pluckPos_last = 0;
+	static float pluckPos_last = 0;
 	static float pluckTargetPos;
+	
+	static uint32_t interval_time = 0;
+	
 	shoot_flag = 1;
 	if(!isPluckStuck())
 	{
@@ -99,7 +105,7 @@ void RcShoot(void)
 			case cont_shoot:
 				//连发逻辑			
 				pluckPos_last = pluck.Angle_zeroCheck;
-				pluckTargetPos = pluckPos_last + 0.8*Onegrid;
+				pluckTargetPos = pluckPos_last + 0.4*Onegrid;
 				
 				pluck.PositionPID.SetPoint = pluckTargetPos;
 				break;
@@ -269,9 +275,8 @@ static void shoot_config(void)
 void shoot_PID_init(void)
 {
 
-	
 	pluck.PositionPID.P = 0.3;
-	;
+	
 	pluck.PositionPID.I = 0.01;
 	pluck.PositionPID.D = 0;
 	pluck.PositionPID.IMax = 20000;
@@ -329,8 +334,8 @@ float imu_filter(float imu_in)
 static void Plane_ID_Shoot_Config(void)
 {
 #if Plane_ID == 1
-	FrictionWheel_speed_stable1 = -8000;
-	FrictionWheel_speed_stable2 = -8000;
+	FrictionWheel_speed_stable1 = -7500;
+	FrictionWheel_speed_stable2 = -7500;//左边
 
 	//plunk_inc_speed = 10000; // 拨盘转速
 #elif Plane_ID == 2

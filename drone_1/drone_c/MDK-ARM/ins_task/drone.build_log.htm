@@ -5,10 +5,10 @@
 <h2>Tool Versions:</h2>
 IDE-Version: μVision V5.15
 Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: a 8613597580648, a, LIC=----
+License Information: a 8613597580648, a, LIC=P6FUH-WD0Z0-SEVH0-B0DYJ-WRZ7X-FQXUR
  
 Tool Versions:
-Toolchain:       MDK-Lite  Version: 5.15.0
+Toolchain:       MDK-ARM Professional  Version: 5.15.0
 Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.05 update 2 (build 169)
 Assembler:       Armasm.exe V5.05 update 2 (build 169)
@@ -21,16 +21,22 @@ Target DLL:      Segger\JL2CM3.dll V2.99.15.0
 Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
-C:\Users\86135\OneDrive\桌面\无人机\drone_c\drone_c\MDK-ARM\drone.uvprojx
-Project File Date:  04/14/2024
+C:\Users\86135\OneDrive\桌面\无人机\RM\2024_Embedded\drone_c\MDK-ARM\drone.uvprojx
+Project File Date:  04/19/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'drone'
+compiling stm32f4xx_it.c...
+../Src/stm32f4xx_it.c(175): warning:  #223-D: function "xPortSysTickHandler" declared implicitly
+    xPortSysTickHandler();
+../Src/stm32f4xx_it.c(406): warning:  #177-D: variable "temp" was declared but never referenced
+        uint32_t temp;
+../Src/stm32f4xx_it.c: 2 warnings, 0 errors
 linking...
-ins_task\drone.axf: error: L6050U: The code size of this image (55776 bytes) exceeds the maximum allowed for this version of the linker.
-Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
-"ins_task\drone.axf" - 1 Error(s), 0 Warning(s).
+Program Size: Code=59824 RO-data=3940 RW-data=1248 ZI-data=43272  
+FromELF: creating hex file...
+"ins_task\drone.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -41,17 +47,16 @@ Package Vendor: ARM
    * Component: CORE Version: 5.4.0
 
 <h2>Collection of Component include folders:</h2>
-  C:\Users\86135\OneDrive\桌面\无人机\drone_c\drone_c\MDK-ARM\RTE
+  C:\Users\86135\OneDrive\桌面\无人机\RM\2024_Embedded\drone_c\MDK-ARM\RTE
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-      Source file:   CMSIS\Core\Template\ARMv8-M\tz_context.c
       Source file:   CMSIS\Core\Template\ARMv8-M\main_s.c
+      Source file:   CMSIS\Core\Template\ARMv8-M\tz_context.c
       Include file:  CMSIS\Core\Include\tz_context.h
-Target not created.
 </pre>
 </body>
 </html>

@@ -75,6 +75,8 @@ ins_task\usb_device.o: ..\bsp\usbd_def.h
 ins_task\usb_device.o: ..\bsp\usbd_conf.h
 ins_task\usb_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ins_task\usb_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+ins_task\usb_device.o: ..\algorithm\SignalGenerator.h
+ins_task\usb_device.o: ..\algorithm\crc.h
 ins_task\usb_device.o: ..\Devices\motor.h
 ins_task\usb_device.o: ..\algorithm\zerocheck.h
 ins_task\usb_device.o: ..\algorithm\feedforward.h
@@ -92,7 +94,7 @@ ins_task\usb_device.o: ..\Devices\PC_Serial.h
 ins_task\usb_device.o: ..\bsp\bsp_delay.h
 ins_task\usb_device.o: ..\bsp\bsp_can.h
 ins_task\usb_device.o: ..\bsp\bsp_PWM.h
-ins_task\usb_device.o: ..\MyTask\counter.h
+ins_task\usb_device.o: ..\Peripheral\counter.h
 ins_task\usb_device.o: ..\MyTask\selfcheck_task.h
 ins_task\usb_device.o: ..\MyTask\gimbal_task.h
 ins_task\usb_device.o: ..\MyTask\shoot_task.h
@@ -101,4 +103,5 @@ ins_task\usb_device.o: ..\MyTask\ActionControl_Task.h
 ins_task\usb_device.o: ..\MyTask\INS_task.h
 ins_task\usb_device.o: ..\algorithm\QuaternionEKF.h
 ins_task\usb_device.o: ..\algorithm\kalman_filter.h
+ins_task\usb_device.o: ..\MyTask\JudgeReceive_Task.h
 ins_task\usb_device.o: ..\Peripheral\usbd_desc.h

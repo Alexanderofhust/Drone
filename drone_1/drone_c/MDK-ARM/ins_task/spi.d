@@ -75,6 +75,8 @@ ins_task\spi.o: ..\bsp\usbd_def.h
 ins_task\spi.o: ..\bsp\usbd_conf.h
 ins_task\spi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ins_task\spi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+ins_task\spi.o: ..\algorithm\SignalGenerator.h
+ins_task\spi.o: ..\algorithm\crc.h
 ins_task\spi.o: ..\Devices\motor.h
 ins_task\spi.o: ..\algorithm\zerocheck.h
 ins_task\spi.o: ..\algorithm\feedforward.h
@@ -92,7 +94,7 @@ ins_task\spi.o: ..\Devices\PC_Serial.h
 ins_task\spi.o: ..\bsp\bsp_delay.h
 ins_task\spi.o: ..\bsp\bsp_can.h
 ins_task\spi.o: ..\bsp\bsp_PWM.h
-ins_task\spi.o: ..\MyTask\counter.h
+ins_task\spi.o: ..\Peripheral\counter.h
 ins_task\spi.o: ..\MyTask\selfcheck_task.h
 ins_task\spi.o: ..\MyTask\gimbal_task.h
 ins_task\spi.o: ..\MyTask\shoot_task.h
@@ -101,3 +103,4 @@ ins_task\spi.o: ..\MyTask\ActionControl_Task.h
 ins_task\spi.o: ..\MyTask\INS_task.h
 ins_task\spi.o: ..\algorithm\QuaternionEKF.h
 ins_task\spi.o: ..\algorithm\kalman_filter.h
+ins_task\spi.o: ..\MyTask\JudgeReceive_Task.h

@@ -49,6 +49,8 @@ extern float pitch_PC_Keyboard_sensitivity;       // 键鼠模式pitch键盘灵�
 extern float yaw_PC_Keyboard_sensitivity_motor;   // 键鼠模式yaw键盘灵敏度 电机反馈
 extern float pitch_PC_Keyboard_sensitivity_motor; // 键鼠模式pitch键盘灵敏度 电机反馈
 
+
+//extern SawToothWave wave;
 void GimbalTask(void const *pvParameters);
 
 #endif //__GIMBAL__

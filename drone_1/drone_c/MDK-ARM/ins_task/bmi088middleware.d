@@ -77,6 +77,8 @@ ins_task\bmi088middleware.o: ..\bsp\usbd_def.h
 ins_task\bmi088middleware.o: ..\bsp\usbd_conf.h
 ins_task\bmi088middleware.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ins_task\bmi088middleware.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+ins_task\bmi088middleware.o: ..\algorithm\SignalGenerator.h
+ins_task\bmi088middleware.o: ..\algorithm\crc.h
 ins_task\bmi088middleware.o: ..\Devices\motor.h
 ins_task\bmi088middleware.o: ..\algorithm\zerocheck.h
 ins_task\bmi088middleware.o: ..\algorithm\feedforward.h
@@ -92,7 +94,7 @@ ins_task\bmi088middleware.o: ..\Devices\PC_Serial.h
 ins_task\bmi088middleware.o: ..\bsp\bsp_delay.h
 ins_task\bmi088middleware.o: ..\bsp\bsp_can.h
 ins_task\bmi088middleware.o: ..\bsp\bsp_PWM.h
-ins_task\bmi088middleware.o: ..\MyTask\counter.h
+ins_task\bmi088middleware.o: ..\Peripheral\counter.h
 ins_task\bmi088middleware.o: ..\MyTask\selfcheck_task.h
 ins_task\bmi088middleware.o: ..\MyTask\gimbal_task.h
 ins_task\bmi088middleware.o: ..\MyTask\shoot_task.h
@@ -101,4 +103,5 @@ ins_task\bmi088middleware.o: ..\MyTask\ActionControl_Task.h
 ins_task\bmi088middleware.o: ..\MyTask\INS_task.h
 ins_task\bmi088middleware.o: ..\algorithm\QuaternionEKF.h
 ins_task\bmi088middleware.o: ..\algorithm\kalman_filter.h
+ins_task\bmi088middleware.o: ..\MyTask\JudgeReceive_Task.h
 ins_task\bmi088middleware.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

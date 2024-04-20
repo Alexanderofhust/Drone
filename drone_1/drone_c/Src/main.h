@@ -23,6 +23,11 @@
 #include "IMU.h"
 #include "usb_device.h"
 
+
+//Algorithm
+#include "SignalGenerator.h"
+#include "crc.h"
+
 //DEVICE
 #include "motor.h"
 #include "BMI088driver.h"
@@ -48,6 +53,7 @@
 #include "shoot_task.h"
 #include "ActionControl_Task.h"
 #include "INS_task.h"
+#include "JudgeReceive_Task.h"
 // #include "debug_task.h"
 
 #define POWER_OFF 0

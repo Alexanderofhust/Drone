@@ -22,6 +22,8 @@ struct compose {
 	unsigned int pitch_disconneced 		: 2;
     
 	unsigned int Pluck_disconneced 		: 2;
+	unsigned int frimition0_disconneced 		: 2;
+	unsigned int frimition1_disconneced 		: 2;
 	
 } __attribute__ ((__packed__));
 

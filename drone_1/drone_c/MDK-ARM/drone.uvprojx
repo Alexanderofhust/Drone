@@ -52,7 +52,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath></ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -757,6 +757,11 @@
               <FileType>1</FileType>
               <FilePath>..\MyTask\shoot_task.c</FilePath>
             </File>
+            <File>
+              <FileName>JudgeReceive_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MyTask\JudgeReceive_Task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -872,6 +877,11 @@
               <FileType>1</FileType>
               <FilePath>..\algorithm\QuaternionEKF.c</FilePath>
             </File>
+            <File>
+              <FileName>SignalGenerator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\algorithm\SignalGenerator.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -921,6 +931,11 @@
               <FileName>usbd_desc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Peripheral\usbd_desc.c</FilePath>
+            </File>
+            <File>
+              <FileName>counter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\counter.c</FilePath>
             </File>
           </Files>
         </Group>

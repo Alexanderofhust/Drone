@@ -26,10 +26,13 @@ void BSP_Init(void)
 	MX_TIM5_Init();//led RGB
 	MX_I2C3_Init();//磁力计
 	MX_TIM10_Init();//pwm控制温度
+	MX_TIM3_Init();
 	MX_CAN1_Init();
 	MX_CAN2_Init();
 	MX_USART3_UART_Init();//遥控
 	MX_USB_DEVICE_Init();//辅瞄串口
+	MX_UART6_Init();//裁判系统.
+	
 
 	MX_TIM2_Init();
 	

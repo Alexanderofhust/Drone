@@ -76,6 +76,8 @@ ins_task\user_lib.o: ..\Peripheral\usb_device.h
 ins_task\user_lib.o: ..\bsp\usbd_def.h
 ins_task\user_lib.o: ..\bsp\usbd_conf.h
 ins_task\user_lib.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+ins_task\user_lib.o: ..\algorithm\SignalGenerator.h
+ins_task\user_lib.o: ..\algorithm\crc.h
 ins_task\user_lib.o: ..\Devices\motor.h
 ins_task\user_lib.o: ..\algorithm\zerocheck.h
 ins_task\user_lib.o: ..\algorithm\feedforward.h
@@ -93,7 +95,7 @@ ins_task\user_lib.o: ..\Devices\PC_Serial.h
 ins_task\user_lib.o: ..\bsp\bsp_delay.h
 ins_task\user_lib.o: ..\bsp\bsp_can.h
 ins_task\user_lib.o: ..\bsp\bsp_PWM.h
-ins_task\user_lib.o: ..\MyTask\counter.h
+ins_task\user_lib.o: ..\Peripheral\counter.h
 ins_task\user_lib.o: ..\MyTask\selfcheck_task.h
 ins_task\user_lib.o: ..\MyTask\gimbal_task.h
 ins_task\user_lib.o: ..\MyTask\shoot_task.h
@@ -102,4 +104,5 @@ ins_task\user_lib.o: ..\MyTask\ActionControl_Task.h
 ins_task\user_lib.o: ..\MyTask\INS_task.h
 ins_task\user_lib.o: ..\algorithm\QuaternionEKF.h
 ins_task\user_lib.o: ..\algorithm\kalman_filter.h
+ins_task\user_lib.o: ..\MyTask\JudgeReceive_Task.h
 ins_task\user_lib.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

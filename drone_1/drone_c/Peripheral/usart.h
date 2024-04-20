@@ -31,6 +31,7 @@
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN Private defines */
 #define RSTN_IST8310_Pin GPIO_PIN_6
@@ -54,9 +55,13 @@ extern UART_HandleTypeDef huart3;
 #define INT1_GYRO_EXTI_IRQn EXTI9_5_IRQn
 #define CS1_GYRO_Pin GPIO_PIN_0
 #define CS1_GYRO_GPIO_Port GPIOB
+#define JudgeBufBiggestSize 256
 /* USER CODE END Private defines */
 
 void MX_USART3_UART_Init(void);
+void HAL_UART_IDLECallback(UART_HandleTypeDef *huart);
+void MX_UART6_Init(void);
+void HAL_UART_IDLECallback(UART_HandleTypeDef *huart);
 
 /* USER CODE BEGIN Prototypes */
 

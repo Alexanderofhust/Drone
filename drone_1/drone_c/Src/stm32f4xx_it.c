@@ -22,6 +22,7 @@
 #include "main.h"
 #include "stm32f4xx_it.h"
 #include "cmsis_os.h"
+#include "usart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -57,9 +58,13 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern TIM_HandleTypeDef htim3;
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
+extern DMA_HandleTypeDef hdma_usart6_rx;
+extern DMA_HandleTypeDef hdma_usart6_tx;
+extern UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN EV */
 
@@ -182,6 +187,41 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
+extern SawToothWave wave;
+float num = 0;//计数器
+float ARR = 1000;//初始频率为1hz
+float freq = 1;//频率
+short circle = 0;//特定频率下循环次数设定
+void TIM3_IRQHandler(void)
+{
+//  /* USER CODE BEGIN TIM2_IRQn 0 */
+//	
+//  /* USER CODE END TIM2_IRQn 0 */
+		HAL_TIM_IRQHandler(&htim3);
+		num++;
+		SawWave(&wave,0.0);
+//		GimbalYawPos = 30*freq*num/1000;
+//		//超过1s之后，循环++，循环5次后，频率++
+//		if(num>=ARR)
+//		{
+//			circle++;
+//			GimbalYawPos = 0;
+//			if(circle>=1)
+//			{
+//				freq+=0.05;		
+//				ARR = (int)(1000/freq);
+//				if(freq>=10)
+//					freq=10;
+//				circle = 0;
+//			}
+//			
+//			num = 0;
+//		}
+  /* USER CODE BEGIN TIM2_IRQn 1 */
+	//num = SawWaveRun(&wave,0.001);
+  /* USER CODE END TIM2_IRQn 1 */
+}
+
 
 /**
   * @brief This function handles EXTI line0 interrupt.
@@ -332,6 +372,55 @@ void OTG_FS_IRQHandler(void)
 
   /* USER CODE END OTG_FS_IRQn 1 */
 }
+
+/**
+  * @brief This function handles DMA2 stream1 global interrupt.
+  */
+void DMA2_Stream1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream1_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart6_rx);
+  /* USER CODE BEGIN DMA2_Stream1_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream6 global interrupt.
+  */
+void DMA2_Stream6_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream6_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream6_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart6_tx);
+  /* USER CODE BEGIN DMA2_Stream6_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream6_IRQn 1 */
+}
+void USART6_IRQHandler(void)
+{
+	uint32_t tmp_flag = 0;
+	uint32_t temp;
+	tmp_flag =__HAL_UART_GET_FLAG(&huart6,UART_FLAG_IDLE); //获取IDLE标志位
+	if((tmp_flag != RESET))//idle标志被置位
+	{ 
+		//__HAL_UART_CLEAR_IDLEFLAG(&huart6);//清除标志位
+		//temp = huart6.Instance->SR;  //清除状态寄存器SR,读取SR寄存器可以实现清除SR寄存器的功能
+		//temp = huart6.Instance->DR; //读取数据寄存器中的数据
+		//这两句和上面那句等效
+		//HAL_UART_DMAStop(&huart6); //  停止DMA传输，防止
+		HAL_UART_IDLECallback(&huart6);
+	}
+  HAL_UART_IRQHandler(&huart6);
+
+}
+/**
+  * @brief This function handles USART6 global interrupt.
+  */
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

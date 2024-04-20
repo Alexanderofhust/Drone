@@ -40,6 +40,7 @@ osThreadId SelfcheckTask_handle;
 osThreadId ActionControl_task_handle;
 osThreadId GimbalTask_handle;
 osThreadId ShootTask_handle;
+osThreadId JudgeReceive_task_handle;
 
 /* USER CODE END PTD */
 
@@ -150,6 +151,9 @@ void MX_FREERTOS_Init(void) {
 		
 		osThreadDef(ShootTask, ShootTask, osPriorityRealtime, 0, 256);
     ShootTask_handle = osThreadCreate(osThread(ShootTask), NULL);
+		
+		osThreadDef(JudgeReceive_task, JudgeReceive_task, osPriorityRealtime, 0, 256);
+    JudgeReceive_task_handle = osThreadCreate(osThread(JudgeReceive_task), NULL);
 		
   /* USER CODE END RTOS_THREADS */
 

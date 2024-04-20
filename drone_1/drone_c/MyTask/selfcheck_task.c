@@ -151,6 +151,9 @@ static void selfCheck_update(void)
 	droneState.drone.composeState.RC_disconneced = checkComponent(nowTime,RC_Ctl.updateTime,500);
 	/* 更新拨弹电机状态 */
 	droneState.drone.composeState.Pluck_disconneced = checkComponent(nowTime,pluck.updateTime,100);
+	/* 更新摩擦轮电机状态 */
+	droneState.drone.composeState.frimition0_disconneced = checkComponent(nowTime,pluck.updateTime,100);
+	droneState.drone.composeState.frimition1_disconneced = checkComponent(nowTime,pluck.updateTime,100);
 	/* 更新云台上电状态 */
 //	if(RC_Ctl.rc.s1 == 2)
 //		droneState.Gimbal_poweroff = 1;

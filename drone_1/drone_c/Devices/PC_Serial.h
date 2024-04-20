@@ -8,8 +8,13 @@
 
 typedef struct PCSendData //数据顺序不能变,注意32字节对齐
 {
-    int8_t start_flag;	
-		uint8_t balance_code;
+    int8_t start_flag;
+    uint8_t robot_color : 1;
+    uint8_t shoot_level : 2;
+    uint8_t mode : 2;
+    uint8_t which_balance : 2;
+    uint8_t change_priority_flag : 1;
+    uint8_t frame_id;
     short pitch;
     float yaw;
     int16_t crc16;
@@ -28,7 +33,7 @@ typedef struct PCRecvData
 	
     short pitch;
     float yaw;
-		float distance;
+		//float distance;
     int16_t crc16;
 } PCRecvData;
 
